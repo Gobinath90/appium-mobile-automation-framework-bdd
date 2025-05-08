@@ -10,6 +10,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 import java.io.File;
+import java.io.IOException;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ScreenshotUtils {
@@ -19,7 +20,12 @@ public final class ScreenshotUtils {
   public static void captureScreenshotAsFile(String testName) {
     var source = ((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.FILE);
     var destination = new File(FrameworkConstants.SCREENSHOT_PATH + File.separator + testName + ".png");
-    FileUtils.copyFile(source, destination);
+    try {
+		FileUtils.copyFile(source, destination);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
   }
 
   public static byte[] captureScreenshotAsBytes() {
